@@ -1,0 +1,17 @@
+{
+  "name": "frontend-project-11",
+  "version": "1.0.0",
+  "description": "[![Actions Status](https://github.com/pavlovkeith/frontend-project-11/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/pavlovkeith/frontend-project-11/actions)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "html-webpack-plugin": "^5.6.2",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
