@@ -90,6 +90,7 @@
     "no-case": "^3.0.4",
     "node-releases": "^2.0.18",
     "nth-check": "^2.1.1",
+    "on-change": "^5.0.1",
     "p-limit": "^2.3.0",
     "p-locate": "^4.1.0",
     "p-try": "^2.2.0",
@@ -132,6 +133,7 @@
     "webpack-merge": "^5.10.0",
     "webpack-sources": "^3.2.3",
     "which": "^2.0.2",
-    "wildcard": "^2.0.1"
+    "wildcard": "^2.0.1",
+    "yup": "^1.4.0"
   }
 }
