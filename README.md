@@ -5,8 +5,20 @@
 
 ## About
 
-**"Rss-aggregator"**
+**"Rss-aggregator"** Project for aggregating RSS feeds.
 
 ## Vercel deployment
 
 [https://frontend-project-11-pavlovkeith.vercel.app](https://frontend-project-11-pavlovkeith.vercel.app)
+
+## Usage
+
+```shell
+# Clone the repo
+git clone https://github.com/pavlovkeith/frontend-project-11.git
+cd frontend-project-11
+npm install
+
+# Install dependencies
+make install
+```
