@@ -1,1 +1,6 @@
 .vercel
+/node_modules/
+*.log
+dist
+assets
+.DS-Store
