@@ -5,7 +5,8 @@
 
 ## About
 
-**"Rss-aggregator"** Project for aggregating RSS feeds.
+**"Rss-aggregator"**
+Удобный сервис для сбора RSS-каналов, который позволяет читать контент из разных источников в одном месте. Вы можете добавлять любое количество RSS-каналов, например, с новостных порталов и блогов. Все материалы объединяются в общую ленту, которая автоматически обновляется.
 
 ## Vercel deployment
 
@@ -14,6 +15,7 @@
 ## Usage
 
 ```
+# Clone the repo
 git clone https://github.com/pavlovkeith/frontend-project-11.git
 cd frontend-project-11
 npm install

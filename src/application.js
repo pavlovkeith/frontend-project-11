@@ -18,23 +18,15 @@ const createUrl = (rssFeed) => {
 const handleResponse = (response, watchedState) => {
   const newPosts = getParsedData(response.data.contents).posts;
   const oldTitles = new Set(watchedState.posts.map((post) => post.titlePost));
-  const filteredNewPost = newPosts.filter(
-    (post) => !oldTitles.has(post.titlePost),
-  );
-  const newPostsWithId = filteredNewPost.map((post) => ({
-    id: _.uniqueId(),
-    ...post,
-  }));
+  const filteredNewPost = newPosts.filter((post) => !oldTitles.has(post.titlePost));
+  const newPostsWithId = filteredNewPost.map((post) => ({ id: _.uniqueId(), ...post }));
   newPostsWithId.map((post) => watchedState.posts.unshift(post));
 };
 
 const handleDataResponse = (response, watchedState, url) => {
   const parsedData = getParsedData(response.data.contents);
   const feedsWithUrl = { link: url, ...parsedData.feeds };
-  const initial = parsedData.posts.map((item) => ({
-    id: _.uniqueId(),
-    ...item,
-  }));
+  const initial = parsedData.posts.map((item) => ({ id: _.uniqueId(), ...item }));
   watchedState.feeds = [...watchedState.feeds, feedsWithUrl];
   watchedState.posts = [...watchedState.posts, ...initial];
 };
@@ -109,20 +101,16 @@ export default async () => {
     }
   };
 
-  const getHTTPresponseData = (url) =>
-    axios
-      .get(createUrl(url))
-      .then((response) => handleDataResponse(response, watchedState, url));
+  const getHTTPresponseData = (url) => axios.get(createUrl(url))
+    .then((response) => handleDataResponse(response, watchedState, url));
 
   const updateData = (feeds, interval = 5000) => {
     setTimeout(() => {
-      const newPromise = feeds.flat().map((feed) =>
-        axios
-          .get(createUrl(feed.link))
-          .then((response) => handleResponse(response, watchedState))
-          .catch((error) => errorHandler(error)),
-      );
-      Promise.all(newPromise).finally(() => updateData(feeds));
+      const newPromise = feeds.flat().map((feed) => axios.get(createUrl(feed.link))
+        .then((response) => handleResponse(response, watchedState))
+        .catch((error) => errorHandler(error)));
+      Promise.all(newPromise)
+        .finally(() => updateData(feeds));
     }, interval);
   };
 
@@ -134,20 +122,17 @@ export default async () => {
   elements.form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    makeValidateScheme(state.links)
-      .validate(elements.urlInput.value)
+    makeValidateScheme(state.links).validate(elements.urlInput.value)
       .then(() => {
-        getHTTPresponseData(elements.urlInput.value)
-          .then(() => {
-            state.form.error = i18n.t('validUrl');
-            state.links.push(elements.urlInput.value);
-            watchedState.status = 'loaded';
-            watchedState.status = 'feeling';
-            updateData(watchedState.feeds);
-            e.target.reset();
-            elements.urlInput.focus();
-          })
-          .catch((err) => errorHandler(err));
+        getHTTPresponseData(elements.urlInput.value).then(() => {
+          state.form.error = i18n.t('validUrl');
+          state.links.push(elements.urlInput.value);
+          watchedState.status = 'loaded';
+          watchedState.status = 'feeling';
+          updateData(watchedState.feeds);
+          e.target.reset();
+          elements.urlInput.focus();
+        }).catch((err) => errorHandler(err));
       })
       .catch((error) => {
         const [currentError] = error.errors;
@@ -159,10 +144,13 @@ export default async () => {
   elements.posts.addEventListener('click', (e) => {
     if (e.target.dataset.id) {
       const activePostId = e.target.dataset.id;
-      const activePost = watchedState.posts.filter(
-        (post) => post.id === activePostId,
-      )[0];
-      const { id, titlePost, descriptionPost, linkPost } = activePost;
+      const activePost = watchedState.posts.filter((post) => post.id === activePostId)[0];
+      const {
+        id,
+        titlePost,
+        descriptionPost,
+        linkPost,
+      } = activePost;
       watchedState.action = {
         linkPost,
         titlePost,

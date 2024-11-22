@@ -28,11 +28,7 @@ const makeContainer = (box, elements = [], text = '') => {
   const cardBorder = createNewElement('div', ['card', 'border-0']);
   const cardBody = createNewElement('div', ['card-body']);
   const cardTitle = createNewElement('h2', ['card-title', 'h4'], text);
-  const listGroup = createNewElement('ul', [
-    'list-group',
-    'border-0',
-    'rounded-0',
-  ]);
+  const listGroup = createNewElement('ul', ['list-group', 'border-0', 'rounded-0']);
   listGroup.append(...elements);
   cardBody.append(cardTitle);
   cardBorder.append(cardBody, listGroup);
@@ -42,17 +38,9 @@ const makeContainer = (box, elements = [], text = '') => {
 const makeFeedList = (feeds, text) => {
   const feedsList = feeds.flat();
   const feedsMap = feedsList.map(({ title, description }) => {
-    const elList = createNewElement('li', [
-      'list-group-item',
-      'border-0',
-      'border-end-0',
-    ]);
+    const elList = createNewElement('li', ['list-group-item', 'border-0', 'border-end-0']);
     const head = createNewElement('h3', ['h6', 'm-0'], title);
-    const descr = createNewElement(
-      'p',
-      ['m-0', 'small', 'text-black-50'],
-      description,
-    );
+    const descr = createNewElement('p', ['m-0', 'small', 'text-black-50'], description);
     elList.append(head, descr);
     return elList;
   });
@@ -63,14 +51,9 @@ const makeFeedList = (feeds, text) => {
 
 const makePostsContainer = (watched, elements = [], text = '') => {
   const postList = elements.map((post) => {
-    const el = createNewElement('li', [
-      'list-group-item',
-      'd-flex',
-      'justify-content-between',
-      'align-items-start',
-      'border-0',
-      'border-end-0',
-    ]);
+    const el = createNewElement('li', ['list-group-item', 'd-flex',
+      'justify-content-between', 'align-items-start',
+      'border-0', 'border-end-0']);
     let link = '';
     if (watched.has(post)) {
       link = createNewElement('a', ['fw-normal', 'link-secondary']);
@@ -83,11 +66,7 @@ const makePostsContainer = (watched, elements = [], text = '') => {
     link.setAttribute('rel', 'noopener noreferrer');
     link.textContent = post.titlePost;
 
-    const button = createNewElement('button', [
-      'btn',
-      'btn-outline-primary',
-      'btn-sm',
-    ]);
+    const button = createNewElement('button', ['btn', 'btn-outline-primary', 'btn-sm']);
     button.setAttribute('type', 'button');
     button.setAttribute('data-id', post.id);
     button.setAttribute('data-bs-toggle', 'modal');
@@ -132,47 +111,38 @@ const makeInvaildText = (elements, text) => {
   elements.feedback.textContent = text;
 };
 
-export default (state, elements, i18n) =>
-  onChange(state, (path, value) => {
-    switch (path) {
-      case 'form.error':
-        console.log(value);
-        makeInvaildText(elements, i18n.t(`errors.${value}`));
-        break;
-      case 'process':
-        if (value === 'init') {
-          displayInitialization(elements, i18n);
-        }
-        break;
-      case 'status':
-        elements.feeds.textContent = '';
-        elements.posts.textContent = '';
-        makeFeedList(state.feeds, i18n.t('titleFeeds'));
-        makePostsContainer(
-          state.watchedPosts,
-          state.posts,
-          i18n.t('titlePosts'),
-        );
-        makeSuccesText(elements, i18n.t('validUrl'));
-        break;
-      case 'posts':
-        makePostsContainer(
-          state.watchedPosts,
-          state.posts,
-          i18n.t('titlePosts'),
-        );
-        break;
-      case 'feeds':
-        break;
-      case 'action':
-        makeModal(elements, value);
-        break;
-      case 'opened':
-        changeStylePost(value);
-        break;
-      case 'watchedPosts':
-        break;
-      default:
-        throw new Error('BOOM!');
-    }
-  });
+export default (state, elements, i18n) => onChange(state, (path, value) => {
+  switch (path) {
+    case 'form.error':
+      console.log(value);
+      makeInvaildText(elements, i18n.t(`errors.${value}`));
+      break;
+    case 'process':
+      if (value === 'init') {
+        displayInitialization(elements, i18n);
+      }
+      break;
+    case 'status':
+      elements.feeds.textContent = '';
+      elements.posts.textContent = '';
+      makeFeedList(state.feeds, i18n.t('titleFeeds'));
+      makePostsContainer(state.watchedPosts, state.posts, i18n.t('titlePosts'));
+      makeSuccesText(elements, i18n.t('validUrl'));
+      break;
+    case 'posts':
+      makePostsContainer(state.watchedPosts, state.posts, i18n.t('titlePosts'));
+      break;
+    case 'feeds':
+      break;
+    case 'action':
+      makeModal(elements, value);
+      break;
+    case 'opened':
+      changeStylePost(value);
+      break;
+    case 'watchedPosts':
+      break;
+    default:
+      throw new Error('BOOM!');
+  }
+});
