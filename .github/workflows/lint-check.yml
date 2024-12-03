@@ -1,5 +1,4 @@
-
-name: lint Check
+name: lint check
 
 on:
   push:
