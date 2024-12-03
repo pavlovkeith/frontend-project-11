@@ -1,5 +1,5 @@
 
-name: 🎨 Lint Check
+name: lint Check
 
 on:
   push:
