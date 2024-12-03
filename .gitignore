@@ -2,5 +2,5 @@
 *.log
 dist
 assets
-.DS-Store
+.DS_Store
 .vercel
